@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Colors - White/Slate */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    
+    --primary: 25 34% 33%; /* #6F4E37 - Coffee */
+    --primary-foreground: 40 43% 91%; /* Beige */
+    
+    --secondary: 40 43% 91%; /* #F2E8D5 - Beige */
+    --secondary-foreground: 25 34% 33%;
+    
+    --muted: 40 43% 91%;
+    --muted-foreground: 25 10% 40%;
+    
+    --accent: 45 66% 52%; /* #D4AF37 - Gold */
+    --accent-foreground: 25 34% 15%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 25 34% 33%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 20 20% 8%;
+    --foreground: 40 43% 91%;
+    --card: 20 20% 10%;
+    --card-foreground: 40 43% 91%;
+    --border: 20 20% 15%;
+    --primary: 40 43% 91%;
+    --primary-foreground: 20 20% 8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  
+    background-color: #FDFBF7; 
+  }
+  
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+    @apply font-bold;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2E8D5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6F4E37;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3E2723;
+}
