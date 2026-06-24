@@ -11,7 +11,7 @@ const Contact = () => {
     e.preventDefault();
  
     toast.success("Pesan terkirim!", {
-      description: "Tim Kopi Kirkan akan segera menghubungi Anda.",
+      description: "Tim Kaeru Coffee akan segera menghubungi Anda.",
       duration: 5000,
     });
     e.target.reset();
@@ -48,7 +48,7 @@ const Contact = () => {
           >
             <div className="mb-10">
               <span className="text-gold font-bold tracking-[0.3em] text-xs uppercase mb-3 block">Connect With Us</span>
-              <h2 className="text-5xl font-serif text-coffee-dark mb-6">Let's Talk Coffee</h2>
+              <h2 className="text-5xl font-serif text-coffee-dark mb-6">Let's Talk Kaeru Coffee</h2>
               <p className="text-gray-500 font-light leading-relaxed">
                 Punya pertanyaan tentang menu kami, kerjasama bisnis, atau sekadar ingin menyapa? Kami selalu senang mendengar cerita Anda.
               </p>
@@ -110,8 +110,8 @@ const Contact = () => {
                 Kami biasanya merespons pesan dalam waktu kurang dari 24 jam kerja.
               </p>
               <div className="space-y-4">
-                <a href="mailto:hello@kopikirkan.com" className="flex items-center gap-4 text-gold hover:text-white transition-colors">
-                  <Mail size={20} /> hello@kopikirkan.com
+                <a href="mailto:hello@kaerucoffee.com" className="flex items-center gap-4 text-gold hover:text-white transition-colors">
+                  <Mail size={20} /> hello@kaerucoffee.com
                 </a>
               </div>
             </div>

@@ -10,7 +10,7 @@ module.exports = {
         ring: "hsl(var(--ring))", // Pastikan ada hsl() di sini
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        // Warna Kopi Kirkan (Premium)
+        // Warna Kaeru Coffee(Premium)
         coffee: {
           light: '#D7CCC8',
           DEFAULT: '#6F4E37',

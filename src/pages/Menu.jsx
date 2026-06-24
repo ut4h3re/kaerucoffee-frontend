@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Coffee, IceCream, Cookie, Plus } from 'lucide-react';
 
@@ -9,63 +9,65 @@ const categories = [
   { id: 'Pastry', name: 'Pastry', icon: <Cookie size={16} /> },
 ];
 
-const menuItems = [
-  { 
-    id: 1, 
-    name: "Caramel Macchiato", 
-    price: "35k", 
-    cat: "Coffee", 
-    desc: "Espresso dengan susu creamy dan saus karamel premium.",
-    image: "https://images.unsplash.com/photo-1485808191679-5f6333f3f01f" 
-  },
-  { 
-    id: 2, 
-    name: "Aren Latte", 
-    price: "28k", 
-    cat: "Coffee", 
-    desc: "Kopi susu kekinian dengan gula aren asli pilihan.",
-    image: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f" 
-  },
-  { 
-    id: 3, 
-    name: "Matcha Latte", 
-    price: "32k", 
-    cat: "Non-Coffee", 
-    desc: "Bubuk matcha Jepang murni dengan tekstur susu yang lembut.",
-    image: "https://images.unsplash.com/photo-1515823064-d6e0c04616a7" 
-  },
-  { 
-    id: 4, 
-    name: "Croissant Almond", 
-    price: "25k", 
-    cat: "Pastry", 
-    desc: "Pastry renyah dengan isian dan topping kacang almond.",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a" 
-  },
-  { 
-    id: 5, 
-    name: "Cold Brew Lemon", 
-    price: "30k", 
-    cat: "Coffee", 
-    desc: "Kopi seduh dingin 12 jam dengan sensasi kesegaran lemon.",
-    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c" 
-  },
-  { 
-    id: 6, 
-    name: "Pain au Chocolat", 
-    price: "24k", 
-    cat: "Pastry", 
-    desc: "Roti klasik Prancis dengan cokelat batang lumer di dalamnya.",
-    image: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd" 
-  },
-];
-
 const Menu = () => {
   const [activeTab, setActiveTab] = useState('all');
+  // --- STATE BARU: Untuk menampung menu dari database phpMyAdmin ---
+  const [menuItems, setMenuItems] = useState([]);
 
+  // --- AMBIL DATA DARI BACKEND SAAT HALAMAN DIBUKA ---
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`) // Sesuaikan port ini dengan port server Node.js Anda (misal 5000 atau 8080)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Gagal mengambil data dari server');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // Mapping struktur kolom database MySQL agar sesuai dengan kebutuhan variabel di UI React
+        const formattedData = data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          // Mengonversi angka murni (misal: 35000) dari DB menjadi format tampilan ringkas (35k) seperti desain asli Anda
+          price: item.price >= 1000 ? `${Math.floor(item.price / 1000)}k` : item.price,
+          cat: item.category, // mencocokkan kolom 'category' dari MySQL
+          desc: item.desc || "Menu racikan terbaik yang dibuat spesial untuk Anda.", // deskripsi fallback jika kolom DB kosong
+          image: item.image_url && item.image_url.startsWith('http') 
+            ? item.image_url 
+            : `/images/${item.image_url || 'default-coffee.jpg'}` // Jalur gambar lokal atau URL eksternal
+        }));
+        setMenuItems(formattedData);
+      })
+      .catch((err) => console.error('❌ Terjadi kesalahan koneksi API menu:', err));
+  }, []);
+
+  // --- LOGIKA FILTER KATEGORI (Mencocokkan id kategori dengan kolom cat) ---
   const filteredItems = activeTab === 'all' 
     ? menuItems 
-    : menuItems.filter(item => item.cat === activeTab);
+    : menuItems.filter(item => item.cat.toLowerCase() === activeTab.toLowerCase());
+
+  // === FUNGSI TAMBAH KE KERANJANG BELANJA ===
+  const addToCart = (item) => {
+    // 1. Ambil data keranjang lama dari localStorage (jika ada)
+    const existingCart = JSON.parse(localStorage.getItem('kopikirkan_cart')) || [];
+    
+    // 2. Cek apakah produk tersebut sudah dimasukkan sebelumnya
+    const itemIndex = existingCart.findIndex(cartItem => cartItem.id === item.id);
+
+    if (itemIndex > -1) {
+      // Jika sudah ada, naikkan jumlah kuantitasnya
+      existingCart[itemIndex].quantity += 1;
+    } else {
+      // Jika belum ada, masukkan data baru dengan kuantitas awal 1
+      existingCart.push({ ...item, quantity: 1 });
+    }
+
+    // 3. Simpan kembali ke localStorage
+    localStorage.setItem('kopikirkan_cart', JSON.stringify(existingCart));
+
+    // 4. Kirim sinyal (Custom Event) agar badge angka di Navbar langsung ikut berubah secara real-time
+    window.dispatchEvent(new Event('cartUpdate'));
+  };
 
   return (
     <div className="pt-32 pb-20 min-h-screen bg-[#FDFBF7]">
@@ -83,13 +85,14 @@ const Menu = () => {
           <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
         </div>
 
+        {/* --- BAGIAN TOMBOL KATEGORI --- */}
         <div className="flex flex-wrap justify-center gap-4 mb-16">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
               className={`flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 border ${
-                activeTab === cat.id 
+                activeTab.toLowerCase() === cat.id.toLowerCase() 
                 ? 'bg-[#3E2723] text-white border-[#3E2723] shadow-lg' 
                 : 'bg-white text-[#3E2723] border-[#F2E8D5] hover:border-[#D4AF37]'
               }`}
@@ -99,6 +102,7 @@ const Menu = () => {
           ))}
         </div>
 
+        {/* --- BAGIAN DISPLAY KARTU MENU --- */}
         <motion.div 
           layout
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
@@ -131,7 +135,11 @@ const Menu = () => {
                       <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest">{item.cat}</span>
                       <h3 className="text-xl font-serif text-[#3E2723]">{item.name}</h3>
                     </div>
-                    <button className="bg-[#3E2723] text-white p-2 rounded-full hover:bg-[#D4AF37] transition-colors">
+                    {/* BIND FUNGSI ADD TO CART */}
+                    <button 
+                      onClick={() => addToCart(item)}
+                      className="bg-[#3E2723] text-white p-2 rounded-full hover:bg-[#D4AF37] hover:scale-110 transition-all"
+                    >
                       <Plus size={18} />
                     </button>
                   </div>
@@ -144,6 +152,13 @@ const Menu = () => {
           </AnimatePresence>
         </motion.div>
 
+        {/* JIKA MENU DI DATABASE KOSONG */}
+        {filteredItems.length === 0 && (
+          <div className="text-center py-12 text-gray-400 font-light">
+            Belum ada menu tersedia untuk kategori ini di database.
+          </div>
+        )}
+
         <div className="mt-20 text-center p-10 border-2 border-dashed border-[#F2E8D5] rounded-[3rem]">
           <p className="text-[#3E2723]/60 italic font-serif">
             "Semua menu kami menggunakan bahan organik dan diproses secara artisan setiap hari."
@@ -154,4 +169,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+  export default Menu;

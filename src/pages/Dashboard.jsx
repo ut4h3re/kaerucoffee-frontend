@@ -38,7 +38,7 @@ const Dashboard = () => {
               transition={{ delay: 0.5 }}
               className="text-[#D4AF37] font-bold tracking-[0.3em] text-xs uppercase mb-4 block"
             >
-              Established 2024
+              Established 2026 
             </motion.span>
             <h1 className="text-6xl md:text-8xl font-serif text-[#3E2723] leading-[1.1] mb-6">
               Nikmati Kopi <br /> 

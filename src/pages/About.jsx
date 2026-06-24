@@ -29,10 +29,10 @@ const About = () => {
               </h2>
               <div className="space-y-6">
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  Kopi Kirkan bermula dari sebuah garasi kecil dengan mimpi besar: membawa kemewahan kopi artisan ke tangan setiap orang tanpa kehilangan rasa kehangatan rumah.
+                  Kaeru Coffee bermula dari sebuah garasi kecil dengan mimpi besar: membawa kemewahan kopi artisan ke tangan setiap orang tanpa kehilangan rasa kehangatan rumah.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed font-light">
-                  Nama **"Kirkan"** lahir dari semangat untuk memberikan apa yang orang "pikirkan" tentang rasa kopi ideal—seimbang, berkarakter, dan menenangkan. Kami percaya kopi bukan sekadar minuman, tapi jembatan antar manusia.
+                  Nama "Kaeru Coffee" lahir dari semangat untuk memberikan apa yang orang pikirkan tentang rasa kopi ideal—seimbang, berkarakter, dan menenangkan. Kami percaya kopi bukan sekadar minuman, tapi jembatan antar manusia.
                 </p>
               </div>
 
@@ -60,7 +60,7 @@ const About = () => {
                 <img
                   src="https://images.unsplash.com/photo-1442512595331-e89e73853f31"
                   className="w-full h-full object-cover"
-                  alt="Interior Kopi Kirkan"
+                  alt="Interior Kaeru Coffee"
                 />
               </div>
 

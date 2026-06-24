@@ -18,7 +18,7 @@ const articles = [
     excerpt: "Panduan lengkap memilih rasio air dan kopi untuk hasil seduhan ala barista profesional...",
     date: "10 Mei 2026",
     author: "Head Barista",
-    image: "https://images.unsplash.com/photo-1544787210-2827443cb69b"
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=800&auto=format&fit=crop"
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const articles = [
     excerpt: "Mengapa kopi asal Jawa Barat ini menjadi primadona di kedai kami bulan ini? Simak ulasannya...",
     date: "08 Mei 2026",
     author: "Roaster",
-    image: "https://images.unsplash.com/photo-1506370822645-6a56a10528d2"
+    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=600&auto=format&fit=crop"
   }
 ];
 
@@ -50,7 +50,7 @@ const News = () => {
           </motion.span>
           <h2 className="text-5xl font-serif text-coffee-dark mb-4">Coffee Journal</h2>
           <p className="text-gray-500 font-light text-lg">
-            Eksplorasi dunia kopi, teknik menyeduh, hingga cerita di balik setiap biji bersama Kopi Kirkan.
+            Eksplorasi dunia kopi, teknik menyeduh, hingga cerita di balik setiap biji bersama Kaeru Coffee.
           </p>
         </div>
         

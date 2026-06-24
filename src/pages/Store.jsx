@@ -5,25 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const outlets = [
   { 
-    name: "Senopati Boutique", 
-    address: "Jl. Senopati No. 12, Jakarta Selatan", 
+    name: "Kaeru Coffee - Depok", 
+    address: "Ruko De Arcade, Jl. Boulevard Grand Depok City, Tirtajaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16412", 
     hours: "07:00 - 22:00",
     phone: "+62 21-555-0192",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24"
-  },
-  { 
-    name: "Dago Terrace", 
-    address: "Jl. Ir. H. Juanda No. 88, Bandung", 
-    hours: "08:00 - 23:00",
-    phone: "+62 22-444-0123",
-    image: "https://images.unsplash.com/photo-1559925393-8be0ec418cd9"
-  },
-  { 
-    name: "Semarang Old Town", 
-    address: "Jl. Letjen Suprapto No. 31, Kota Lama", 
-    hours: "09:00 - 22:00",
-    phone: "+62 24-333-0456",
-    image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814"
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop"
   },
 ];
 
@@ -46,7 +32,7 @@ const Store = () => {
             <h2 className="text-5xl font-serif text-coffee-dark mb-6">Kunjungi Ruang Kami</h2>
             <div className="w-20 h-1 bg-gold mx-auto mb-6"></div>
             <p className="text-gray-500 text-lg font-light leading-relaxed">
-              Temukan kehangatan Kopi Kirkan di kota terdekatmu. Setiap gerai dirancang khusus untuk memberikan kenyamanan maksimal bagi produktivitas dan cerita Anda.
+              Temukan kehangatan Kaeru Coffee di kota Depok. Setiap gerai dirancang khusus untuk memberikan kenyamanan maksimal bagi produktivitas dan cerita Anda.
             </p>
           </motion.div>
         </div>
@@ -124,7 +110,7 @@ const Store = () => {
         >
           <div>
             <h4 className="text-2xl font-serif text-coffee-dark mb-2">Tertarik Menjadi Partner?</h4>
-            <p className="text-gray-500">Bawa pengalaman Kopi Kirkan ke lingkungan Anda melalui program kemitraan kami.</p>
+            <p className="text-gray-500">Bawa pengalaman Kaeru Coffee ke lingkungan Anda melalui program kemitraan kami.</p>
           </div>
           <button className="bg-coffee-dark text-white px-10 py-4 rounded-full font-bold hover:bg-gold transition-all shadow-lg whitespace-nowrap">
             Hubungi Partnership
