@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { CreditCard, QrCode, CheckCircle, ArrowLeft, Copy, Clock, Upload, Send } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import QRdana from '../assets/QRdana.jpeg';
 
 const Checkout = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState('qris'); // 'qris' atau 'va'
+  const [paymentMethod, setPaymentMethod] = useState('qris'); // 'qris' atau 'rekening bank'
   const [selectedBank, setSelectedBank] = useState('bca');
   const [isPaid, setIsPaid] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -58,7 +59,7 @@ const Checkout = () => {
     }, 0);
   };
 
-  const handleCopyVA = (text) => {
+  const handleCopyREK = (text) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -108,7 +109,7 @@ const Checkout = () => {
     formData.append('name', userData.name);
     formData.append('email', userData.email);
     formData.append('total', calculateTotal());
-    formData.append('method', paymentMethod === 'va' ? `VA_${selectedBank.toUpperCase()}` : 'QRIS');
+    formData.append('method', paymentMethod === 'rekening bank' ? `REK_${selectedBank.toUpperCase()}` : 'QRIS');
     
     // Kirim array objek items yang telah dinormalisasi
     formData.append('items', JSON.stringify(normalizedItems));
@@ -165,7 +166,7 @@ const Checkout = () => {
             <div className="flex justify-between font-medium">
               <span className="text-gray-400">Metode:</span>
               <span className="uppercase text-[#3E2723] font-bold">
-                {paymentMethod} {paymentMethod === 'va' && `(${selectedBank})`}
+                {paymentMethod} {paymentMethod === 'rekening bank' && `(${selectedBank})`}
               </span>
             </div>
             <div className="flex justify-between font-medium">
@@ -200,7 +201,7 @@ const Checkout = () => {
           
           <h1 className="text-3xl font-serif font-bold text-[#3E2723]">Metode Pembayaran</h1>
 
-          {/* Opsi Tab QRIS / VA */}
+          {/* Opsi Tab QRIS / REK */}
           <div className="grid grid-cols-2 gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
             <button
               onClick={() => setPaymentMethod('qris')}
@@ -213,14 +214,14 @@ const Checkout = () => {
               <QrCode size={18} /> QRIS / E-Wallet
             </button>
             <button
-              onClick={() => setPaymentMethod('va')}
+              onClick={() => setPaymentMethod('rekening bank')}
               className={`flex items-center justify-center gap-3 py-4 rounded-xl font-bold text-sm transition-all ${
-                paymentMethod === 'va'
+                paymentMethod === 'rekening bank'
                   ? 'bg-[#3E2723] text-white shadow-md'
                   : 'text-gray-500 hover:bg-[#FDFBF7]'
               }`}
             >
-              <CreditCard size={18} /> Virtual Account (VA)
+              <CreditCard size={18} /> Rekening Bank (REKENING VIRTUAL)
             </button>
           </div>
 
@@ -231,11 +232,11 @@ const Checkout = () => {
             {paymentMethod === 'qris' && (
               <div className="text-center space-y-6 max-w-sm mx-auto">
                 <div className="flex items-center justify-center gap-2 text-xs font-bold text-amber-600 bg-amber-50 py-2 px-4 rounded-full w-fit mx-auto">
-                  <Clock size={14} /> Bayar dalam waktu 15:00 menit
+                  <Clock size={14} /> Segera Melakukan Pembayaran
                 </div>
                 <div className="p-4 bg-white border-2 border-gray-100 rounded-3xl inline-block shadow-inner">
                   <img 
-                    src="src/assets/QR Dana Han.jpeg" 
+                    src={QRdana} alt="QR Dana Kaeru Coffee"
                     alt="QRIS Kaeru Coffee"
                     className="w-56 h-56 mx-auto rounded-xl object-cover"
                   />
@@ -246,12 +247,12 @@ const Checkout = () => {
               </div>
             )}
 
-            {/* Tampilan Konten Virtual Account */}
-            {paymentMethod === 'va' && (
+            {/* Tampilan Konten Rekening */}
+            {paymentMethod === 'rekening bank' && (
               <div className="space-y-6">
                 <p className="text-sm text-gray-500 font-medium">Pilih Bank Transfer:</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {['bca', 'bni', 'mandiri', 'jago'].map((bank) => (
+                  {['bca', 'bni', 'jago'].map((bank) => (
                     <button
                       key={bank}
                       onClick={() => setSelectedBank(bank)}
@@ -261,25 +262,24 @@ const Checkout = () => {
                           : 'border-gray-100 hover:border-gray-300 text-gray-400'
                       }`}
                     >
-                      {bank} VA
+                      {bank} REK
                     </button>
                   ))}
                 </div>
 
-                {/* Info Detail Rekening VA */}
+                {/* Info Detail Rekening Bank */}
                 <div className="bg-[#FDFBF7] p-6 rounded-2xl border border-gray-200/60 mt-6 space-y-4">
                   <div>
-                    <span className="text-xs text-gray-400 block uppercase font-bold tracking-wider">Nomor Virtual Account</span>
+                    <span className="text-xs text-gray-400 block uppercase font-bold tracking-wider">Nomor Rekening</span>
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xl font-mono font-bold tracking-wider text-[#3E2723]">
-                        {selectedBank === 'bca' && '8801200506063991'}
-                        {selectedBank === 'bni' && '9880050606399124'}
-                        {selectedBank === 'mandiri' && '700120506063991'}
-                        {selectedBank === 'jago' && '102305060639918'}
+                        {selectedBank === 'bca' && '7275325171 a/n Handra Putra Alma'}
+                        {selectedBank === 'bni' && '1903942291 a/n Handra Putra Alma'}
+                        {selectedBank === 'jago' && '107997122300'}
                       </span>
                       <button 
-                        onClick={() => handleCopyVA(
-                          selectedBank === 'bca' ? '8801200506063991' : selectedBank === 'bni' ? '9880050606399124' : selectedBank === 'mandiri' ? '700120506063991' : '102305060639918'
+                        onClick={() => handleCopyREK(
+                          selectedBank === 'bca' ? '7275325171 a/n Handra Putra Alma' : selectedBank === 'bni' ? '1903942291 a/n Handra Putra Alma' : selectedBank === 'jago' ? '107997122300' : ''
                         )}
                         className="text-gray-400 hover:text-[#3E2723] flex items-center gap-1 text-xs font-bold transition-colors bg-white px-3 py-1.5 border border-gray-200 rounded-lg"
                       >
